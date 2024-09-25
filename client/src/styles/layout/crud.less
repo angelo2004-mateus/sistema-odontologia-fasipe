@@ -1,0 +1,140 @@
+@import '../variables.less';
+
+.crud {
+  h3 {
+    margin-bottom: 20px;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+
+    .container_input {
+      display: flex;
+      flex-wrap: wrap;
+
+      .ant-input {
+        flex: 1 1 100px;
+      }
+    }
+
+    .container_button {
+      display: flex;
+      align-items: center;
+    }
+  }
+  @media (max-width: 1200px) {
+    .header {
+      flex-wrap: wrap;
+    }
+  }
+
+  .ant-table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 1rem;
+
+    th,
+    td {
+      padding: 0.75rem;
+      vertical-align: top;
+    }
+
+    thead th {
+      vertical-align: bottom;
+      background-color: rgb(255, 255, 255);
+      font-size: 14px;
+      border-left: none;
+      color: @grey-7;
+    }
+
+    tbody + tbody {
+      border-top: 2px solid #d9d9d9;
+    }
+  }
+
+  .ant-table-bordered {
+    border: 1px solid #d9d9d9;
+
+    th,
+    td {
+      border: 1px solid #d9d9d9;
+    }
+
+    thead th,
+    thead td {
+      border-bottom-width: 2px;
+    }
+  }
+
+  .ant-table-no-bordered {
+    border: none;
+
+    th,
+    td {
+      border: none;
+    }
+
+    thead th,
+    thead td {
+      border-bottom-width: 2px;
+    }
+
+    .ant-table-thead > tr > th {
+      font-weight: normal;
+      font-size: 13px;
+    }
+
+    .ant-table-tbody > tr > td {
+      border-bottom: none;
+    }
+  }
+
+  .ant-table-thead-uppercase {
+    thead th {
+      text-transform: uppercase;
+    }
+  }
+
+  .ant-table-padding-lg {
+    thead th,
+    tbody td {
+      padding: 20px 30px;
+
+      @media screen and (max-width: 768px) {
+        padding: 15px 20px;
+      }
+
+      @media screen and (max-width: 576px) {
+        padding: 10px;
+      }
+    }
+
+    .ant-table-pagination {
+      float: none;
+      text-align: center;
+      margin: 22px 0;
+
+      @media screen and (max-width: 768px) {
+        margin: 16px 0;
+      }
+    }
+  }
+
+  .hide-select-all th .ant-table-selection {
+    display: none;
+  }
+
+  .ant-table-wrapper.clickable td:hover {
+    cursor: pointer;
+  }
+
+  .ant-table-content .ant-table-row-selected .ant-table-cell {
+    color: #fff;
+  }
+
+  .ant-table-default .ant-table-thead > tr > th {
+    background-color: white;
+    padding: 0 16px 16px 16px;
+  }
+}
