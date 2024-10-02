@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { Table, Input, Button, Space } from "antd";
+import { Table, Input, Button, Space, Select } from "antd"; // Importa o Select do Ant Design
 import { ColumnType } from "antd/es/table";
 import "../../styles/layout/crud.less";
+
+const { Option } = Select;
 
 interface Field {
   type: string;
@@ -9,6 +11,7 @@ interface Field {
   placeholder: string;
   rules?: any;
   prefix?: any;
+  options?: { label: string; value: string | number }[]; // Para armazenar opções de select
 }
 
 interface CrudProps<T> {
@@ -16,11 +19,13 @@ interface CrudProps<T> {
   fields: Field[];
   columns: ColumnType<T>[];
   data: T[];
-  onEdit: (record: T) => void; 
-  onDelete: (record: T) => void;
-  actionsAllowed?: Array<"edit" | "delete">; 
-  actions?: React.ReactNode[]; 
+  onEdit?: (record: T) => void;
+  onDelete?: (record: T) => void;
+  onViewDetails?: (record: T) => void; // Nova função para ver detalhes
+  actionsAllowed?: Array<"edit" | "delete" | "viewDetails">;
+  actions?: React.ReactNode[];
   editComponent?: React.ReactNode;
+  viewComponent?: React.ReactNode; // Componente de visualização
 }
 
 const Crud = <T extends object>({
@@ -30,12 +35,19 @@ const Crud = <T extends object>({
   data,
   onEdit,
   onDelete,
+  onViewDetails, // Adicionado onViewDetails
   actionsAllowed = [],
   actions,
-  editComponent, 
+  editComponent,
+  viewComponent, // Adicionado viewComponent
 }: CrudProps<T>) => {
-  const [searchValues, setSearchValues] = useState<Record<string, string>>(
-    fields.reduce((acc, field) => ({ ...acc, [field.name]: "" }), {})
+  const [searchValues, setSearchValues] = useState<Record<string, string | number>>(
+    fields.reduce((acc, field) => {
+      if (field.type === "select") {
+        return { ...acc, [field.name]: "Todos" }; // Valor padrão para selects
+      }
+      return { ...acc, [field.name]: "" }; // Valor padrão para inputs de texto ou outros
+    }, {})
   );
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -49,14 +61,26 @@ const Crud = <T extends object>({
       });
     };
 
+  const handleSelectChange = (name: string, value: string | number) => {
+    setSearchValues({
+      ...searchValues,
+      [name]: value,
+    });
+  };
+
   const filteredData = data.filter((item) =>
     fields.every((field) => {
       const value = item[field.name as keyof T];
       const searchValue = searchValues[field.name] || "";
+
+      if (field.type === "select" && searchValue === "Todos") {
+        return true;
+      }
+
       return value
         ?.toString()
         .toLowerCase()
-        .includes(searchValue.toLowerCase());
+        .includes(searchValue.toString().toLowerCase());
     })
   );
 
@@ -67,46 +91,52 @@ const Crud = <T extends object>({
     setCurrentPage(page);
   };
 
-  // Função para truncar texto
-  const truncateText = (text: string, limit: number) => {
-    if (text.length > limit) {
-      return text.slice(0, limit) + "..."; // Adiciona '...' se o texto exceder o limite
-    }
-    return text;
-  };
+  const actionColumn: ColumnType<T> | null =
+    actionsAllowed.length > 0
+      ? {
+          title: "Ações",
+          key: "actions",
+          render: (text, record) => (
+            <Space>
+              {actionsAllowed.includes("edit") && (
+                <Button
+                  className="small btn-edit"
+                  onClick={() => onEdit && onEdit(record)}
+                >
+                  Editar
+                </Button>
+              )}
+              {actionsAllowed.includes("delete") && (
+                <Button
+                  className="small btn-delete"
+                  danger
+                  onClick={() => onDelete && onDelete(record)}
+                >
+                  Excluir
+                </Button>
+              )}
+              {actionsAllowed.includes("viewDetails") && (
+                <Button
+                  className="middle btn-view"
+                  onClick={() => onViewDetails && onViewDetails(record)}
+                >
+                  Detalhes
+                </Button>
+              )}
+            </Space>
+          ),
+        }
+      : null;
 
-  // Adiciona uma coluna de ações (Editar, Excluir) apenas se ações forem permitidas
-  const actionColumn: ColumnType<T> | null = actionsAllowed.length > 0 ? {
-    title: "Ações",
-    key: "actions",
-    render: (text, record) => (
-      <Space>
-        {actionsAllowed.includes("edit") && (
-          <Button
-            className="small btn-edit"
-            onClick={() => onEdit(record)} 
-          >
-            Editar
-          </Button>
-        )}
-        {actionsAllowed.includes("delete") && (
-          <Button
-            className="small btn-delete"
-            danger
-            onClick={() => onDelete(record)}
-          >
-            Excluir
-          </Button>
-        )}
-      </Space>
-    ),
-  } : null;
-
-  // Modifica as colunas para aplicar o truncamento
-  const modifiedColumns = columns.map((col) => {
+  const modifiedColumns = columns.map((col, index) => {
     return {
       ...col,
-      render: (text: string) => truncateText(text, 15), // Aplica truncamento a cada célula
+      render: (text: any, record: T) => {
+        if (col.render) {
+          return col.render(text, record, index);
+        }
+        return text;
+      },
     };
   });
 
@@ -115,17 +145,38 @@ const Crud = <T extends object>({
       <h3 className="h3">{title}</h3>
       <div className="header">
         <div className="container_input">
-          {fields.map((field) => (
-            <Input
-              className="input_filled"
-              prefix={field.prefix}
-              key={field.name}
-              placeholder={`Pesquisar por ${field.placeholder}`}
-              value={searchValues[field.name]}
-              onChange={handleSearchChange(field.name)}
-              style={{ marginBottom: 8, width: "200px", marginRight: "8px" }}
-            />
-          ))}
+          {fields.map((field) => {
+            if (field.type === "select") {
+              return (
+                <Select
+                  key={field.name}
+                  placeholder={`Pesquisar por ${field.placeholder}`}
+                  value={searchValues[field.name]}
+                  onChange={(value) => handleSelectChange(field.name, value)}
+                  style={{ marginBottom: 8, width: "200px", marginRight: "8px" }}
+                >
+                  <Option value="Todos">Todos</Option>
+                  {field.options?.map((option) => (
+                    <Option key={option.value} value={option.value}>
+                      {option.label}
+                    </Option>
+                  ))}
+                </Select>
+              );
+            }
+
+            return (
+              <Input
+                className="input_filled"
+                prefix={field.prefix}
+                key={field.name}
+                placeholder={`Pesquisar por ${field.placeholder}`}
+                value={searchValues[field.name]}
+                onChange={handleSearchChange(field.name)}
+                style={{ marginBottom: 8, width: "200px", marginRight: "8px" }}
+              />
+            );
+          })}
         </div>
         {actions && (
           <div className="container_button">
@@ -148,10 +199,11 @@ const Crud = <T extends object>({
           total: filteredData.length,
           onChange: handlePageChange,
         }}
-        scroll={{ y: '100%' }}
+        size="middle"
       />
 
       {editComponent}
+      {viewComponent}
     </section>
   );
 };

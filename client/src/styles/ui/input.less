@@ -1,80 +1,348 @@
-.ant-input {
-    flex: 1 1 200px;
-    border: @border-1;
-    border-radius: @radius-sm;
-    padding: @padding-sm-h-w;
-    transition: border-color 0.3s, box-shadow 0.3s;
+// resetar a borda para Select, DatePicker, AutoComplete, Cascader, Mention, TimePicker
+& > .@{class-prefix}-select > .@{class-prefix}-select-selection,
+& > .@{class-prefix}-calendar-picker .@{class-prefix}-input,
+& > .@{class-prefix}-select-auto-complete .@{class-prefix}-input,
+& > .@{class-prefix}-cascader-picker .@{class-prefix}-input,
+& > .@{class-prefix}-mention-wrapper .@{class-prefix}-mention-editor,
+& > .@{class-prefix}-time-picker .@{class-prefix}-time-picker-input {
+  border-radius: 4px;
+  border-right-width: 1px;
+}
 
-    &:hover {
-      border-color: @primary;  
+// Estilos do Input
+.ant-input:hover {
+  border-color: @primary;
+}
+
+.ant-input:focus {
+  border-color: @primary;
+  outline: 0;
+  -webkit-box-shadow: 0 0 0 2px rgba(110, 172, 30, 0.2);
+  box-shadow: 0 0 0 2px rgba(110, 172, 30, 0.2);
+}
+
+// Estilos da Barra de Pesquisa
+.ant-input-search {
+  margin-bottom: 16px;
+
+  & > .ant-input-suffix > .ant-input-search-button {
+    margin-right: 0;
+  }
+}
+
+.ant-input-group {
+  & > [class*='col-'] {
+    padding-left: 0;
+    float: left !important;
+  }
+}
+
+// Estilos da Lista de Transferência
+.ant-transfer-list {
+  margin-bottom: 10px;
+  width: 150px;
+
+  @media screen and (max-width: @screen-xs-max) {
+    width: 100%;
+  }
+}
+
+.@{class-prefix}-form-group {
+  margin-bottom: 10px;
+}
+
+// Estilos da Barra de Pesquisa Personalizada
+.@{class-prefix}-input-search-bar {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  & input[type='search'] {
+    background-color: transparent;
+    padding-left: 26px;
+    width: 245px;
+    cursor: text;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border: 1px solid #e8e8e8;
+    border-radius: 30px;
+  }
+
+  & .search-icon {
+    position: absolute;
+    color: gray;
+    left: 8px;
+    margin-top: 2px;
+  }
+}
+
+// Estilo Geral da Barra de Pesquisa
+.@{class-prefix}-search-bar {
+  position: relative;
+
+  & .@{class-prefix}-form-group {
+    width: 100%;
+    height: 100%;
+    margin-bottom: 0;
+  }
+
+  & .ant-input-affix-wrapper {
+    padding: 0px;
+    height: 36px;
+  }
+
+  & input[type='search'] {
+    padding-right: 35px;
+    background: fade(@grey-2, 10%);
+
+    .ant-layout-header &,
+    .ant-popover-content & {
+      border: 0 none;
     }
 
     &:focus {
-      border-color: @primary; 
-      outline: none;
       box-shadow: none;
-    }
-
-    &:focus-visible {
-      border-color: @primary;  
-      outline: none;
-
-    }
-
-    &:not(:focus) {
-      border-color: @border-color;  
-      box-shadow: none;
-    }
-
-    
-}
-
-
-.input_filled {
-  background-color: @grey-3 !important;
-}
-  
-  .ant-input-search {
-    margin-bottom: 16px;
-  
-    & > .ant-input-suffix > .ant-input-search-button {
-      margin-right: 0;
+      background-color: fade(@grey-2, 30%);
     }
   }
-  
-  .ant-input-affix-wrapper {
+
+  & .@{class-prefix}-search-icon {
+    margin-left: 4px;
     background-color: transparent;
-    border: 1px solid #e8e8e8;
-    border-radius: 30px;
-  
-    & input[type='search'] {
-      padding-left: 26px;
-      width: 245px;
-  
-      &:focus {
-        background-color: rgba(87, 168, 233, 0.1);
-      }
-    }
-  
-    & .search-icon {
-      position: absolute;
-      color: gray;
-      left: 8px;
+    border: 0 none;
+    color: lighten(@grey-6, 10%);
+    height: 44px;
+    width: 30px;
+    line-height: 42px;
+    text-align: center;
+    position: absolute;
+    right: 0;
+    top: 0;
+
+    .@{class-prefix}-algolia-header & {
       margin-top: 2px;
+      text-align: left;
     }
   }
-  
-  .ant-input-group {
-    display: flex;
-    align-items: center;
-  
-    & > .ant-input {
-      flex: 1;
-      margin-right: 10px;
-  
-      &:last-child {
-        margin-right: 0;
+
+  & .ant-input-lg + .@{class-prefix}-search-icon {
+    height: 40px;
+    line-height: 45px;
+  }
+}
+
+// Barra de Pesquisa com Ícone à Esquerda
+.@{class-prefix}-lt-icon-search-bar {
+  & input[type='search'] {
+    padding-right: 16px;
+    padding-left: 35px;
+  }
+
+  & .@{class-prefix}-search-icon {
+    left: 0;
+    right: auto;
+  }
+
+  .@{class-prefix}-algolia-header & {
+    margin-right: 10px;
+
+    @media screen and (max-width: @screen-lg-max) {
+      width: 140px;
+    }
+
+    @media screen and (max-width: (@screen-xs-max - 175px)) {
+      margin-right: 0;
+      margin-bottom: 10px;
+      width: auto;
+    }
+  }
+}
+
+.@{class-prefix}-lt-icon-search-bar-lg {
+  width: 300px;
+
+  & input[type='search'] {
+    border-radius: @border-radius-sm;
+    height: 46px;
+    padding: 8px 18px 10px 40px;
+
+    @media screen and (max-width: @screen-md-max) {
+      height: 38px;
+      padding: 5px 18px 5px 40px;
+    }
+
+    .@{class-prefix}-header-search & {
+      background-color: darken(@grey-2, 2%);
+      height: @input-height-base;
+      border-radius: @border-radius-sm 0 0 @border-radius-sm;
+      border: @border-style-base @border-width-base @border-color;
+
+      &:focus {
+        background-color: darken(@grey-2, 3%);
+      }
+
+      .@{class-prefix}-header-horizontal-dark & {
+        border-color: @white-color;
+        background-color: @white-color;
+        color: @white-color;
+
+        &:focus {
+          background-color: transparent;
+        }
       }
     }
   }
-  
+
+  & .@{class-prefix}-search-icon {
+    width: 35px;
+    height: 46px;
+    line-height: 50px;
+    font-size: 16px;
+    left: 0;
+    right: auto;
+
+    @media screen and (max-width: @screen-md-max) {
+      height: 38px;
+      line-height: 40px;
+    }
+
+    .@{class-prefix}-header-search & {
+      height: @input-height-base;
+      line-height: 40px;
+    }
+  }
+
+  .@{class-prefix}-inside-header-horizontal & {
+    width: 200px;
+    margin-right: 10px;
+
+    @media screen and (max-width: @screen-lg-max) {
+      width: 120px;
+    }
+  }
+
+  @media screen and (max-width: @screen-lg-max) {
+    width: 150px;
+  }
+}
+
+// Estilo da Barra de Pesquisa no Popover
+.@{class-prefix}-popover-search-bar {
+  width: 150px;
+  margin: -10px -14px;
+}
+
+// Estilo da Barra de Pesquisa no Chat
+.@{class-prefix}-chat-search-bar {
+  flex: 1;
+  min-width: 100px;
+  width: auto;
+
+  & input[type='search'] {
+    box-shadow: none;
+    border-radius: 0;
+    height: 40px;
+    border: 0 none;
+
+    &:focus {
+      background-color: @white-color;
+    }
+  }
+
+  & .@{class-prefix}-search-icon {
+    height: 40px;
+    line-height: 44px;
+  }
+}
+
+// Select Personalizado Pequeno
+.@{class-prefix}-select-sm {
+  font-size: @font-size-sm;
+
+  & .ant-select-selection {
+    border-radius: @border-radius-sm;
+  }
+
+  & .ant-select-selection--single {
+    height: @input-height-sm;
+  }
+
+  & .ant-select-selection__rendered {
+    line-height: @input-height-sm - 2px;
+    margin-left: 6px;
+    margin-right: 6px;
+  }
+
+  & .ant-select-selection-selected-value {
+    padding-right: 20px;
+  }
+
+  & .ant-select-arrow {
+    right: 6px;
+  }
+
+  & .ant-select-dropdown {
+    font-size: @font-size-sm;
+  }
+}
+
+// Estilos Formulários Inline
+.@{class-prefix}-form-inline-label-up {
+  & .ant-form-item > .ant-form-item-control-wrapper,
+  & .ant-form-item > .ant-form-item-label {
+    display: block;
+  }
+
+  & .ant-form-item-label {
+    text-align: left;
+    color: @grey-6;
+    line-height: 1;
+    margin-bottom: 2px;
+  }
+
+  & .ant-select-selection--single,
+  & .ant-input {
+    height: @input-height-base-sm + 2px;
+  }
+
+  & .ant-select-selection__rendered {
+    line-height: @input-height-base-sm;
+  }
+}
+
+// Respostas a Media Queries
+@media screen and (max-width: @screen-xs-max) {
+  .@{class-prefix}-ant-transfer-width .ant-transfer-list {
+    width: 100% !important;
+  }
+}
+
+@media screen and (max-width: (@screen-xs-max - 100px)) {
+  .ant-input-group.ant-input-group-compact {
+    & > * {
+      border-radius: 4px !important;
+      width: 100% !important;
+      border-right-width: 1px;
+
+      &:not(:last-child) {
+        margin-bottom: 10px;
+      }
+    }
+
+    // resetar a borda para Select, DatePicker, AutoComplete, Cascader, Mention, TimePicker
+    & > .@{class-prefix}-select > .@{class-prefix}-select-selection,
+    & > .@{class-prefix}-calendar-picker .@{class-prefix}-input,
+    & > .@{class-prefix}-select-auto-complete .@{class-prefix}-input,
+    & > .@{class-prefix}-cascader-picker .@{class-prefix}-input,
+    & > .@{class-prefix}-mention-wrapper .@{class-prefix}-mention-editor,
+    & > .@{class-prefix}-time-picker .@{class-prefix}-time-picker-input {
+      border-radius: 4px;
+      border-right-width: 1px;
+    }
+
+    & .@{class-prefix}-border-lt-xs {
+      border-left: @border-width-base @border-style-base @input-border-color !important;
+    }
+  }
+}

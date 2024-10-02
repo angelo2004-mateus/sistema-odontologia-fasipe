@@ -33,13 +33,14 @@ interface Section {
 interface DrawerFormEditProps {
   title: string;
   sections: Section[];
-  method: "GET" | "POST" | "PUT" | "DELETE";
-  route: string;
+  method?: "GET" | "POST" | "PUT" | "DELETE";
+  route?: string;
   id?: string; // ID opcional para operações GET, PUT, DELETE
-  onSubmit: (values: any) => void;
+  onSubmit?: (values: any) => void;
   onDelete?: (id: string) => void; // Função opcional para deletar
-  onClose: () => void;
+  onClose?: () => void;
   initialValues?: Record<string, any>; // Adicionando valores iniciais
+  actionsAllowed?: string[]; // Nova propriedade para controlar as ações permitidas
 }
 
 const DrawerFormEdit: React.FC<DrawerFormEditProps> = ({
@@ -52,6 +53,7 @@ const DrawerFormEdit: React.FC<DrawerFormEditProps> = ({
   onDelete,
   onClose,
   initialValues, // Recebendo valores iniciais
+  actionsAllowed, // Recebendo as ações permitidas
 }) => {
   const [open, setOpen] = useState(true); // O drawer começa aberto
   const [loading, setLoading] = useState(false);
@@ -99,7 +101,7 @@ const DrawerFormEdit: React.FC<DrawerFormEditProps> = ({
 
       message.success("Operação realizada com sucesso!");
       setOpen(false);
-      onSubmit(values);
+      onSubmit?.(values); // Use optional chaining para evitar erros caso onSubmit não exista
     } catch (error: any) {
       if (error.response && error.response.data.message) {
         message.error(error.response.data.message);
@@ -133,6 +135,8 @@ const DrawerFormEdit: React.FC<DrawerFormEditProps> = ({
     }
   };
 
+  const isViewOnly = actionsAllowed?.includes("viewDetails");
+
   return (
     <Drawer
       title={title}
@@ -144,24 +148,26 @@ const DrawerFormEdit: React.FC<DrawerFormEditProps> = ({
       open={open}
       bodyStyle={{ paddingBottom: 80 }}
       footer={
-        <Space style={{ display: "flex", justifyContent: "end" }}>
-          {method === "GET" && onDelete && (
-            <Button danger onClick={handleDelete} loading={loading}>
-              Deletar
-            </Button>
-          )}
-          <Button onClick={() => setOpen(false)}>Cancelar</Button>
-          {method !== "DELETE" && (
-            <Button
-              form="drawer-form"
-              htmlType="submit"
-              type="primary"
-              loading={loading}
-            >
-              Submit
-            </Button>
-          )}
-        </Space>
+        isViewOnly ? null : ( // Oculta o rodapé se for apenas visualização
+          <Space style={{ display: "flex", justifyContent: "end" }}>
+            {method === "GET" && onDelete && (
+              <Button danger onClick={handleDelete} loading={loading}>
+                Deletar
+              </Button>
+            )}
+            <Button onClick={() => setOpen(false)}>Cancelar</Button>
+            {method !== "DELETE" && (
+              <Button
+                form="drawer-form"
+                htmlType="submit"
+                type="primary"
+                loading={loading}
+              >
+                Submit
+              </Button>
+            )}
+          </Space>
+        )
       }
     >
       <Form
@@ -170,6 +176,7 @@ const DrawerFormEdit: React.FC<DrawerFormEditProps> = ({
         form={form}
         onFinish={handleSubmit}
         hideRequiredMark
+        disabled={isViewOnly} // Desabilita o formulário se for visualização
       >
         {sections.map((section, sectionIndex) => (
           <div key={sectionIndex}>

@@ -2,6 +2,8 @@
 @secondary: #5B8F2D;
 @tertiary: #275a1a;
 
+
+@white-color: @grey-2;
 @grey-2: #fafafa;
 @grey-3: #f5f5f5;
 @grey-4: #e8e8e8;
@@ -14,18 +16,34 @@
 @red-1: red;
 @red-2: rgb(247, 60, 60);
 
+
 @border-1: 1px solid @grey-6;
+@border-style-base: solid;
+@border-width-base: 0px;
+@border-color: @grey-2;
+@border-color: grey-6; // Declarado duas vezes, unificar se necessário
 
-@border-color: grey-6;
+@input-border-color: @grey-7;
 
-@radius-sm: 4px;
-@radius-full: 50px;
+@border-radius-sm: 4px;
+@border-radius-full: 50px;
 
 @padding-sm-h-w: 4px 12px;
 
-@h3: 20px;
+@padding-sm-w: 5px;
 
+@h3: 20px;
 @text-sm: 14px;
+
+@font-size-sm: 12px;
+@font-size-base: 14px;
+@text-sm: 14px; // Declarado duas vezes, unificar se necessário
+
+
+@input-height-base: 36px;
+@input-height-lg: 40px;
+@input-height-sm: 24px;
+@input-height-base-sm: 28px;
 
 @btn-font-size-sm: 12px;
 @btn-font-size-xs: 10px;
@@ -35,3 +53,14 @@
 @btn-padding-horizontal-base: 8px 16px;
 @btn-padding-horizontal-lg: @btn-padding-horizontal-base;
 @btn-padding-horizontal-sm: 4px 12px;
+
+
+@class-prefix: ant; // Prefixo para classes CSS
+
+@font-weight-light: 300;
+
+@screen-sm-max: 576px;
+@screen-md-max: 670px;
+@screen-lg-max: 876px;
+@screen-xs-max: 1200px;
+

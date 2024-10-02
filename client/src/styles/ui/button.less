@@ -1,21 +1,64 @@
+/* Estilos do Botão */
 .ant-btn {
+  margin-right: 15px;
   background-color: @primary;
-  color: @grey-2;
-  border-radius: @radius-sm;
+  border-color: @primary;
+  @media screen and (max-width: @screen-xs-max) {
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
+
+  &:focus,
   &:hover {
-   opacity: 90% !important;
+    text-decoration: none;
+    outline: none;
+    background-color: @primary !important;
+    border-color: @primary !important;
+    opacity: 90%;
+    color: @white-color;
   }
 
-  &.ant-btn-disabled {
+  &:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
   }
+}
 
-  &.ant-btn-sm {
+.ant-btn-sm {
+  padding: 0 7px;
+}
+
+.ant-btn-background-ghost {
+  &.ant-btn-primary {
+    color: @primary;
+
+    &:hover,
+    &:focus {
+      background-color: @primary !important;
+      border-color: @primary !important;
+      color: @white-color;
+    }
+  }
+}
+
+.ant-btn-group {
+  margin-right: 15px;
+
+  @media screen and (max-width: @screen-xs-max) {
+    margin-right: 10px;
   }
 }
 
 .menu-btn {
   background-color: transparent !important;
-  
+  border: none;
+
+  &:hover,
+  &:focus {
+    background-color: @white-color !important;
+    border: none;
+  }
+
   svg {
     color: @grey-7;
   }
@@ -24,22 +67,31 @@
 .small {
   width: 54px;
   height: 25px;
-  border-radius: @radius-full;
+  border-radius: @border-radius-sm;
   font-size: 13px;
 }
 
-.btn-edit {
+.middle {
+  height: 25px;
+  border-radius: @border-radius-sm;
+  font-size: 13px;
+}
+
+.btn-edit, .btn-view {
   background-color: @grey-2;
   color: @grey-8;
+  border-color: @grey-7;
+  padding: @padding-sm-w !important;
 
-  &:hover {
-    border-color: @primary !important;
-    color: @primary !important;
+  &:hover, &:focus {
+    background-color: @grey-3 !important;
+    border-color: @grey-7 !important;
+    color: @grey-8 !important;
   }
 }
 
 .btn-delete {
-  background-color: @red-1;
+  background-color: @red-1 !important;
   color: @grey-2 !important;
   border: none !important;
 
@@ -47,3 +99,5 @@
     background-color: @red-2 !important;
   }
 }
+
+
