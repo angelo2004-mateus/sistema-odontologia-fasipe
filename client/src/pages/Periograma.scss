@@ -1,0 +1,92 @@
+.periograma-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-height: 80vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+
+  h2 {
+    text-align: center;
+    font-size: 1.8em;
+    color: #333;
+  }
+
+  .arcada-superior-direita {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    h3 {
+      font-size: 1.4em;
+      font-weight: bold;
+      color: #555;
+      margin-bottom: 10px;
+    }
+
+    .dente-row {
+      padding: 10px;
+      background-color: #ffffff;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
+      
+      &:hover {
+        background-color: #f0f8ff;
+      }
+
+      h4 {
+        font-size: 1.2em;
+        color: #444;
+        margin-bottom: 8px;
+      }
+
+      .faces,
+      .detalhes {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+
+        label {
+          font-size: 0.9em;
+          color: #333;
+        }
+
+        input {
+          width: 50px;
+          padding: 5px;
+          border-radius: 4px;
+          border: 1px solid #ccc;
+          text-align: center;
+          font-size: 0.9em;
+          outline: none;
+
+          &:focus {
+            border-color: #66afe9;
+            box-shadow: 0 0 4px rgba(102, 175, 233, 0.6);
+          }
+        }
+      }
+    }
+  }
+
+  .btn {
+    align-self: center;
+    padding: 10px 20px;
+    font-size: 1em;
+    background-color: rgba(6, 96, 58, 1);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #45a049;
+    }
+  }
+}

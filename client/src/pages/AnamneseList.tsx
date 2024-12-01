@@ -1,20 +1,23 @@
-// src/components/structure/AnamneseList.tsx
+// src/pages/AnamneseList.tsx
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Crud from "@/components/structure/Crud";
 import { Anamnese } from "@/utils/interfaces/AnamneseInteraface";
 import { fetchData } from "@/utils/api/fetchData";
 import {
   anamneseColumnsTable,
   anamneseFieldInputTable,
-} from "@/utils/variables/AnamneseVariables"; 
+} from "@/utils/variables/AnamneseVariables";
 import AnamneseDrawerForm from "@/components/structure/AnamneseDrawerForm";
 
 const AnamneseList = () => {
   const [anamnese, setAnamnese] = useState<Anamnese[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [editAnamnese, setEditAnamnese] = useState<Anamnese | null>(null); 
-  const [visible, setVisible] = useState(false); // Controla a visibilidade do Drawer
+  const [editAnamnese, setEditAnamnese] = useState<Anamnese | null>(null);
+  const [visible, setVisible] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const loadAnamnese = async () => {
@@ -31,19 +34,21 @@ const AnamneseList = () => {
 
   const handleEdit = (record: Anamnese) => {
     setEditAnamnese(record);
-    setVisible(true); // Abre o Drawer ao editar
+    setVisible(true);
   };
 
   const handleClose = () => {
     setVisible(false);
-    setEditAnamnese(null); // Reseta o estado de edição
+    setEditAnamnese(null);
   };
 
   const handleSubmit = async (values: Anamnese) => {
     console.log("Submetendo alterações da anamnese", values);
-    // Aqui você pode adicionar a lógica para enviar as alterações para o servidor.
-    // Exemplo: await updateAnamnese(values);
-    handleClose(); // Fecha o Drawer após o submit
+    handleClose();
+  };
+
+  const handleNavigateToCadastroAnamnese = () => {
+    navigate("/paciente/cadastroAnamnese");
   };
 
   if (loading) {
@@ -56,12 +61,20 @@ const AnamneseList = () => {
 
   return (
     <>
+      {/* Botão para navegar para a página de cadastro de anamnese */}
+      <button 
+        onClick={handleNavigateToCadastroAnamnese} 
+        style={{ backgroundColor: "green", color: "white", padding: "10px", marginBottom: "20px" }}
+      >
+        Cadastrar Anamnese
+      </button>
+
       {visible && (
         <AnamneseDrawerForm
           title={editAnamnese ? "Editar Anamnese" : "Cadastrar Anamnese"}
-          visible={visible} // Controla a visibilidade do Drawer
+          visible={visible}
           onClose={handleClose}
-          initialValues={editAnamnese || undefined} // Passa o registro a ser editado ou undefined para cadastro
+          initialValues={editAnamnese || undefined}
           onSubmit={handleSubmit}
         />
       )}
