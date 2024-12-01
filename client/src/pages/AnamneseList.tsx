@@ -59,9 +59,9 @@ const AnamneseList = () => {
       {visible && (
         <AnamneseDrawerForm
           title={editAnamnese ? "Editar Anamnese" : "Cadastrar Anamnese"}
-          visible={visible} // Controla a visibilidade do Drawer
+          visible={visible} 
           onClose={handleClose}
-          initialValues={editAnamnese || undefined} // Passa o registro a ser editado ou undefined para cadastro
+          initialValues={editAnamnese || undefined} 
           onSubmit={handleSubmit}
         />
       )}

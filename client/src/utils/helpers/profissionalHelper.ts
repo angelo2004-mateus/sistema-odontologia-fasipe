@@ -24,3 +24,4 @@ export const getStatusProfissional = (status: number): string => {
       return "Desconhecido"; // Para lidar com status não definidos
   }
 };
+

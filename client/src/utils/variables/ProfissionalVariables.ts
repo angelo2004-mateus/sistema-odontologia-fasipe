@@ -1,5 +1,8 @@
 // src/utils/variables/ProfessionalVariables.ts
-import { renderTipo, renderStatus } from "@/utils/helpers/profissionalRenderHelper"; // Importa as funções de renderização
+import {
+  renderTipo,
+  renderStatus,
+} from "@/utils/helpers/profissionalRenderHelper"; // Importa as funções de renderização
 
 export const professionalColumnsTable = [
   { title: "Código", dataIndex: "cod_prof" },
@@ -35,13 +38,13 @@ export const professionalFieldInputTable = [
     name: "status_prof",
     placeholder: "Status",
     options: [
+      { label: "Todos", value: "" },
       { label: "Ativo", value: "ativo" },
       { label: "Inativo", value: "inativo" },
       { label: "Suspenso", value: "suspenso" },
     ],
   },
 ];
-
 
 export const professionalSectionsFormDrawer = [
   {

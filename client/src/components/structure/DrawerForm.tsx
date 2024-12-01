@@ -14,6 +14,7 @@ import {
 } from "antd";
 import axios from "axios"; // Importando o Axios
 import { hostBackEnd } from "../../config/env/config.dev.json";
+import dayJs from 'dayjs'
 
 interface Field {
   name: string;
@@ -226,6 +227,8 @@ const renderField = (field: Field) => {
       );
     case "date":
       return <DatePicker style={{ width: "100%" }} defaultValue={field.value} />;
+    case "date_nasc":
+      return <DatePicker style={{ width: "100%" }} disabledDate={(current) => current && current.isAfter(dayJs())} defaultValue={field.value} />;
     case "daterange":
       return <DatePicker.RangePicker style={{ width: "100%" }} defaultValue={field.value} />;
     default:

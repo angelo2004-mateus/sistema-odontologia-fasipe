@@ -19,6 +19,16 @@ export const patientFieldInputTable = [
     placeholder: "Nome",
     rules: [{ required: true, message: "Por favor, insira o Nome!" }],
   },
+  {
+    type: "select", // Defina como select
+    name: "isDeleted",
+    placeholder: "Status",
+    useCustomFilter: true,
+    options: [
+      { label: "Todos (Não deletados)", value: "" },
+      { label: "Deletado", value: "true" },
+    ],
+  }
 ];
 
 export const patientSectionsFormDrawer = [
@@ -29,11 +39,10 @@ export const patientSectionsFormDrawer = [
         name: "cod_pac",
         type: "text",
         placeholder: "Código",
-        value: '1234',
         rules: [
           { required: true, message: "Por favor, insira o nome completo" },
-          { min: 3, message: "O nome deve ter no mínimo 3 caracteres" },
-          { max: 100, message: "O nome pode ter no máximo 100 caracteres" },
+          { min: 3, message: "O coduigo deve ter no mínimo 3 caracteres" },
+          { max: 100, message: "O codigo pode ter no máximo 100 caracteres" },
         ],
       },
       {
@@ -60,7 +69,7 @@ export const patientSectionsFormDrawer = [
         type: "text",
         placeholder: "RG",
         rules: [
-          { required: true, message: "Por favor, insira o RG" },
+          //{ required: true, message: "Por favor, insira o RG" },
           { min: 7, max: 14, message: "O RG deve ter entre 7 e 14 caracteres" },
         ],
       },
@@ -78,7 +87,7 @@ export const patientSectionsFormDrawer = [
       },
       {
         name: "data_nasc_pac",
-        type: "text",
+        type: "date_nasc",
         placeholder: "Data de Nascimento",
         rules: [
           { required: true, message: "Por favor, insira a data de nascimento" },
@@ -89,7 +98,7 @@ export const patientSectionsFormDrawer = [
         type: "text",
         placeholder: "Nome da Mãe",
         rules: [
-          { required: true, message: "Por favor, insira o nome da mãe" },
+          //{ required: true, message: "Por favor, insira o nome da mãe" },
           {
             min: 3,
             max: 100,
@@ -107,7 +116,7 @@ export const patientSectionsFormDrawer = [
         type: "text",
         placeholder: "Logradouro",
         rules: [
-          { required: true, message: "Por favor, insira o logradouro" },
+          //{ required: true, message: "Por favor, insira o logradouro" },
           {
             min: 3,
             max: 100,
@@ -120,7 +129,7 @@ export const patientSectionsFormDrawer = [
         type: "text",
         placeholder: "Número da Casa",
         rules: [
-          { required: true, message: "Por favor, insira o número da casa" },
+          //{ required: true, message: "Por favor, insira o número da casa" },
           {
             pattern: /^[0-9]+$/,
             message: "O número deve ser composto apenas por dígitos",
@@ -143,7 +152,7 @@ export const patientSectionsFormDrawer = [
         type: "text",
         placeholder: "Bairro",
         rules: [
-          { required: true, message: "Por favor, insira o bairro" },
+          //{ required: true, message: "Por favor, insira o bairro" },
           {
             min: 3,
             max: 100,
@@ -156,7 +165,7 @@ export const patientSectionsFormDrawer = [
         type: "text",
         placeholder: "CEP",
         rules: [
-          { required: true, message: "Por favor, insira o CEP" },
+          //{ required: true, message: "Por favor, insira o CEP" },
           { len: 8, message: "O CEP deve ter 8 dígitos" },
           {
             pattern: /^[0-9]{8}$/,
@@ -169,7 +178,7 @@ export const patientSectionsFormDrawer = [
         type: "text",
         placeholder: "Estado (UF)",
         rules: [
-          { required: true, message: "Por favor, insira o estado (UF)" },
+          //{ required: true, message: "Por favor, insira o estado (UF)" },
           { len: 2, message: "O estado (UF) deve ter exatamente 2 letras" },
           {
             pattern: /^[A-Za-z]{2}$/,

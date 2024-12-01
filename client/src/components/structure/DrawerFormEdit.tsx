@@ -14,6 +14,7 @@ import {
 } from "antd";
 import axios from "axios"; // Importando o Axios
 import { hostBackEnd } from "../../config/env/config.dev.json";
+import dayJs from "dayjs";
 
 interface Field {
   name: string;
@@ -207,9 +208,17 @@ const DrawerFormEdit: React.FC<DrawerFormEditProps> = ({
 const renderField = (field: Field) => {
   switch (field.type) {
     case "text":
-      return <Input placeholder={field.placeholder} defaultValue={field.value} />; // Usando o valor predefinido
+      return (
+        <Input placeholder={field.placeholder} defaultValue={field.value} />
+      ); // Usando o valor predefinido
     case "textarea":
-      return <Input.TextArea rows={4} placeholder={field.placeholder} defaultValue={field.value} />;
+      return (
+        <Input.TextArea
+          rows={4}
+          placeholder={field.placeholder}
+          defaultValue={field.value}
+        />
+      );
     case "select":
       return (
         <Select placeholder={field.placeholder} defaultValue={field.value}>
@@ -221,9 +230,24 @@ const renderField = (field: Field) => {
         </Select>
       );
     case "date":
-      return <DatePicker style={{ width: "100%" }} defaultValue={field.value} />;
-    case "daterange":
-      return <DatePicker.RangePicker style={{ width: "100%" }} defaultValue={field.value} />;
+      return (
+        <DatePicker style={{ width: "100%" }} defaultValue={field.value} />
+      );
+    case "date_nasc":
+      return (
+        <DatePicker
+          style={{ width: "100%" }}
+          disabledDate={(current) => current && current.isAfter(dayJs())}
+          defaultValue={field.value}
+        />
+      );
+    case "date":
+      return (
+        <DatePicker.RangePicker
+          style={{ width: "100%" }}
+          defaultValue={field.value}
+        />
+      );
     default:
       return null;
   }

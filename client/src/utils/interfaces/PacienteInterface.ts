@@ -3,7 +3,7 @@ export interface Paciente {
   cpf_pac: string;
   rg_pac: string;
   nome_pac: string;
-  data_nasc_pac: string;
+  data_nasc_pac: string | null | Date;
   tel_pac: string;
   bairro_pac?: string; // Se precisar de propriedades opcionais, use o ? 
   cep_pac?: string;
