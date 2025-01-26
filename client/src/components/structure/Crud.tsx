@@ -60,7 +60,7 @@ const Crud = <T extends object>({
   >(
     fields.reduce((acc, field) => {
       if (field.useCustomFilter) {
-        return { ...acc, [field.name]: "" }; // Estado local apenas para valores customizados
+        return { ...acc, [field.name]: "" }; 
       }
       return acc;
     }, {})

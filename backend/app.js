@@ -35,14 +35,10 @@ const {
 const {
   salvarConfiguracao,
   upload,
-  obterConfiguracao,
+  obterConfiguracao, 
 } = require("./src/controllers/ConfigController");
 
 // Importando as funções de configuração
-const { cadastrarPaciente, buscarTodosPacientes, buscarPaciente } = require('./src/controllers/PacienteController');
-const { cadastrarAnamnese, listarAnamnese } = require('./src/controllers/AnamneseController');
-const PlanoTratamentoController = require('./src/controllers/PlanoTratamentoController'); 
-const { buscarTodosProfissionais, buscarProfissional } = require('./src/controllers/ProfissionalController');
 
 // Rotas de Pacientes
 app.post("/paciente/cadastrar", cadastrarPaciente);
@@ -76,7 +72,7 @@ app.use("/plano-tratamento", PlanoTratamentoController);
 app.post('/paciente/cadastrarAnamnese', cadastrarAnamnese);
 app.get('/anamnese/listar', listarAnamnese);
 app.use('/plano-tratamento', PlanoTratamentoController);
-
+ 
  
 const env = process.env.NODE_ENV;
 const { port } = require(`./src/config/config.${env}.json`);

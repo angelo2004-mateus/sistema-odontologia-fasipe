@@ -202,7 +202,7 @@ const CustomerList = () => {
 
       {patientDetails && (
         <DrawerFormEdit
-          title="Detalhes do Profissional"
+          title="Detalhes do Paciente"
           sections={patientSectionsFormDrawer}
           onClose={() => setPatientDetails(null)}
           initialValues={patientDetails}

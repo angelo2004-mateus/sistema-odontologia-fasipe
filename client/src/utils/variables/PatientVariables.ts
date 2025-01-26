@@ -69,8 +69,7 @@ export const patientSectionsFormDrawer = [
         type: "text",
         placeholder: "RG",
         rules: [
-          //{ required: true, message: "Por favor, insira o RG" },
-          { min: 7, max: 14, message: "O RG deve ter entre 7 e 14 caracteres" },
+          { required: true, message: "Por favor, insira o RG" },
         ],
       },
       {

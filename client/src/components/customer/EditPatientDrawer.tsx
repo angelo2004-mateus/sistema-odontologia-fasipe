@@ -61,6 +61,7 @@ const EditPatientDrawer: React.FC<EditPatientDrawerProps> = ({
         message.success("Paciente atualizado com sucesso!");
         onUpdate(formattedData);
         onClose();
+        location.reload();
       } else {
         throw new Error("Erro ao atualizar o paciente.");
       }
@@ -75,6 +76,10 @@ const EditPatientDrawer: React.FC<EditPatientDrawerProps> = ({
     moment(patientData.data_nasc_pac).format("YYYY-MM-DD")
   );
 
+  const formSubmit = () => {
+    form.submit();
+  };
+
   return (
     <Drawer
       title="Editar Paciente"
@@ -85,7 +90,7 @@ const EditPatientDrawer: React.FC<EditPatientDrawerProps> = ({
       footer={
         <Space style={{ display: "flex", justifyContent: "end" }}>
           <Button onClick={onClose}>Cancelar</Button>
-          <Button type="primary" onClick={() => form.submit()}>
+          <Button type="primary" onClick={() => formSubmit()}>
             Salvar
           </Button>
         </Space>
